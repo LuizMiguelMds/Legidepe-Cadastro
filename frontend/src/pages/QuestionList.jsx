@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Search, Eye, Edit, Clock, CheckCircle, XCircle, Plus, Filter } from 'lucide-react'
-import API_URL from '../config/api.js'
+import { API_URL } from '../config/api.js'
 
 export default function QuestionList({ user }) {
   const [questions, setQuestions] = useState([])

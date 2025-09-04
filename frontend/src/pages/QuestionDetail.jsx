@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Edit, Clock, CheckCircle, XCircle, Image, BookOpen, Target, Calendar, User } from 'lucide-react'
-import API_URL from '../config/api.js'
+import { API_URL } from '../config/api.js'
 
 export default function QuestionDetail({ user }) {
   const { id } = useParams()

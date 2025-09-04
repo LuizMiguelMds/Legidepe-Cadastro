@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import API_URL from '../config/api.js'
+import { API_URL } from '../config/api.js'
 import { 
   CheckCircle, 
   XCircle, 

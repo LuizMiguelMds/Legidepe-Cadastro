@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Save, AlertCircle } from 'lucide-react'
 import ImageUpload from '../components/ImageUpload'
-import API_URL from '../config/api.js'
+import { API_URL } from '../config/api.js'
 
 export default function QuestionForm({ user }) {
   const navigate = useNavigate()

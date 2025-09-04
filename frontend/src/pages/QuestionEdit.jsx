@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { ArrowLeft, Save, AlertCircle } from 'lucide-react'
-import API_URL from '../config/api.js'
+import { API_URL } from '../config/api.js'
 
 export default function QuestionEdit({ user }) {
   const { id } = useParams()
