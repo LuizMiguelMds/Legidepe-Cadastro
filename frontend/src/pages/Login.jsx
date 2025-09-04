@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { User, AlertCircle } from 'lucide-react'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+
 function Login({ setUser }) {
   const [formData, setFormData] = useState({
     username: '',
@@ -26,7 +28,7 @@ function Login({ setUser }) {
       
       console.log('FormData string:', formDataToSend.toString())
 
-      const response = await fetch('http://localhost:8000/auth/login', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
