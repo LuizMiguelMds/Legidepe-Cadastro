@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Save, AlertCircle } from 'lucide-react'
 import ImageUpload from '../components/ImageUpload'
+import API_URL from '../config/api.js'
 
 export default function QuestionForm({ user }) {
   const navigate = useNavigate()
@@ -57,7 +58,7 @@ export default function QuestionForm({ user }) {
 
     try {
       const token = localStorage.getItem('token')
-      const response = await fetch(`http://localhost:8000/questions/${questionId}/upload-image`, {
+      const response = await fetch(`${API_URL}/questions/${questionId}/upload-image`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -100,7 +101,7 @@ export default function QuestionForm({ user }) {
       const token = localStorage.getItem('token')
       
       // 1. Criar a questão primeiro
-      const response = await fetch('http://localhost:8000/questions/', {
+      const response = await fetch(`${API_URL}/questions/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +131,7 @@ export default function QuestionForm({ user }) {
       // 3. Se upload foi bem-sucedido, atualizar questão com URL da imagem
       if (imageUrl) {
         try {
-          const updateResponse = await fetch(`http://localhost:8000/questions/${createdQuestion.id}`, {
+          const updateResponse = await fetch(`${API_URL}/questions/${createdQuestion.id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',

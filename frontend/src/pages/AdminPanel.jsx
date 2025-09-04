@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import API_URL from '../config/api.js'
 import { 
   CheckCircle, 
   XCircle, 
@@ -37,22 +38,22 @@ export default function AdminPanel({ user }) {
       setLoading(true)
       const token = localStorage.getItem('token')
       
-      // Carregar questões
+      // Carregar questÃµes
       const questionsResponse = await fetch(
-        `http://localhost:8000/admin/questions?status=${statusFilter}`, 
+        `${API_URL}/admin/questions?status=${statusFilter}`, 
         { headers: { 'Authorization': `Bearer ${token}` } }
       )
       
-      // Carregar estatísticas
+      // Carregar estatÃ­sticas
       const statsResponse = await fetch(
-        'http://localhost:8000/admin/stats', 
+        `${API_URL}/admin/stats`, 
         { headers: { 'Authorization': `Bearer ${token}` } }
       )
       
-      // Carregar usuários (apenas se na aba de usuários)
+      // Carregar usuÃ¡rios (apenas se na aba de usuÃ¡rios)
       if (activeTab === 'users') {
         const usersResponse = await fetch(
-          'http://localhost:8000/admin/users', 
+          `${API_URL}/admin/users`, 
           { headers: { 'Authorization': `Bearer ${token}` } }
         )
         if (usersResponse.ok) {
@@ -81,7 +82,7 @@ export default function AdminPanel({ user }) {
     try {
       const token = localStorage.getItem('token')
       const response = await fetch(
-        `http://localhost:8000/admin/questions/${questionId}/${action}`, 
+        `${API_URL}/admin/questions/${questionId}/${action}`, 
         {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${token}` }
@@ -92,13 +93,13 @@ export default function AdminPanel({ user }) {
         // Recarregar dados
         loadAdminData()
         
-        // Mostrar notificação de sucesso
+        // Mostrar notificaÃ§Ã£o de sucesso
         const actionText = action === 'approve' ? 'aprovada' : 'rejeitada'
-        alert(`Questão ${actionText} com sucesso!`)
+        alert(`QuestÃ£o ${actionText} com sucesso!`)
       }
     } catch (error) {
-      console.error('Erro ao processar ação:', error)
-      alert('Erro ao processar ação. Tente novamente.')
+      console.error('Erro ao processar aÃ§Ã£o:', error)
+      alert('Erro ao processar aÃ§Ã£o. Tente novamente.')
     }
   }
 
@@ -106,7 +107,7 @@ export default function AdminPanel({ user }) {
     try {
       const token = localStorage.getItem('token')
       const response = await fetch(
-        `http://localhost:8000/admin/export?format=${format}`, 
+        `${API_URL}/admin/export?format=${format}`, 
         { headers: { 'Authorization': `Bearer ${token}` } }
       )
       
@@ -142,7 +143,7 @@ export default function AdminPanel({ user }) {
       <div className="text-center py-12">
         <XCircle className="mx-auto h-12 w-12 text-red-500 mb-4" />
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Acesso Negado</h2>
-        <p className="text-gray-600">Apenas administradores podem acessar esta página.</p>
+        <p className="text-gray-600">Apenas administradores podem acessar esta pÃ¡gina.</p>
       </div>
     )
   }
@@ -153,7 +154,7 @@ export default function AdminPanel({ user }) {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Painel Administrativo</h1>
-          <p className="text-gray-600 mt-2">Gerencie questões e usuários do sistema</p>
+          <p className="text-gray-600 mt-2">Gerencie questÃµes e usuÃ¡rios do sistema</p>
         </div>
         <div className="flex space-x-3">
           <button
@@ -178,7 +179,7 @@ export default function AdminPanel({ user }) {
         <div className="bg-white p-6 rounded-lg shadow-md border">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total de Questões</p>
+              <p className="text-sm font-medium text-gray-600">Total de QuestÃµes</p>
               <p className="text-3xl font-bold text-gray-900">{stats.total_questions}</p>
             </div>
             <div className="bg-blue-100 p-3 rounded-full">
@@ -202,7 +203,7 @@ export default function AdminPanel({ user }) {
         <div className="bg-white p-6 rounded-lg shadow-md border">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Usuários</p>
+              <p className="text-sm font-medium text-gray-600">UsuÃ¡rios</p>
               <p className="text-3xl font-bold text-green-600">{stats.total_users}</p>
             </div>
             <div className="bg-green-100 p-3 rounded-full">
@@ -239,7 +240,7 @@ export default function AdminPanel({ user }) {
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
-              Questões Pendentes
+              QuestÃµes Pendentes
             </button>
             <button
               onClick={() => {
@@ -252,7 +253,7 @@ export default function AdminPanel({ user }) {
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
-              Questões Aprovadas
+              QuestÃµes Aprovadas
             </button>
             <button
               onClick={() => {
@@ -265,7 +266,7 @@ export default function AdminPanel({ user }) {
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
-              Questões Rejeitadas
+              QuestÃµes Rejeitadas
             </button>
             <button
               onClick={() => {
@@ -278,7 +279,7 @@ export default function AdminPanel({ user }) {
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
-              Usuários
+              UsuÃ¡rios
             </button>
           </nav>
         </div>
@@ -299,19 +300,19 @@ export default function AdminPanel({ user }) {
                     <thead className="bg-gray-50">
                       <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                          Usuário
+                          UsuÃ¡rio
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                           Email
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                          Questões
+                          QuestÃµes
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                           Cadastro
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                          Função
+                          FunÃ§Ã£o
                         </th>
                       </tr>
                     </thead>
@@ -328,7 +329,7 @@ export default function AdminPanel({ user }) {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">
-                              {user.question_count || 0} questões
+                              {user.question_count || 0} questÃµes
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
@@ -342,7 +343,7 @@ export default function AdminPanel({ user }) {
                                 ? 'bg-purple-100 text-purple-800'
                                 : 'bg-gray-100 text-gray-800'
                             }`}>
-                              {user.role === 'admin' ? 'Admin' : 'Usuário'}
+                              {user.role === 'admin' ? 'Admin' : 'UsuÃ¡rio'}
                             </span>
                           </td>
                         </tr>
@@ -351,7 +352,7 @@ export default function AdminPanel({ user }) {
                   </table>
                 </div>
               ) : (
-                <p className="text-gray-500 text-center py-8">Nenhum usuário encontrado</p>
+                <p className="text-gray-500 text-center py-8">Nenhum usuÃ¡rio encontrado</p>
               )}
             </div>
           ) : (
@@ -366,7 +367,7 @@ export default function AdminPanel({ user }) {
                           {question.tema_principal} - {question.subtopico}
                         </h3>
                         <p className="text-sm text-gray-500">
-                          Por: {question.user?.username} • ID: #{question.id} • 
+                          Por: {question.user?.username} â€¢ ID: #{question.id} â€¢ 
                           {formatDate(question.created_at)}
                         </p>
                       </div>
@@ -423,12 +424,12 @@ export default function AdminPanel({ user }) {
                 <div className="text-center py-8">
                   <FileText className="mx-auto h-12 w-12 text-gray-400 mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    Nenhuma questão encontrada
+                    Nenhuma questÃ£o encontrada
                   </h3>
                   <p className="text-gray-600">
                     {activeTab === 'pending' 
-                      ? 'Não há questões pendentes no momento'
-                      : `Não há questões ${activeTab === 'approved' ? 'aprovadas' : 'rejeitadas'} no momento`
+                      ? 'NÃ£o hÃ¡ questÃµes pendentes no momento'
+                      : `NÃ£o hÃ¡ questÃµes ${activeTab === 'approved' ? 'aprovadas' : 'rejeitadas'} no momento`
                     }
                   </p>
                 </div>

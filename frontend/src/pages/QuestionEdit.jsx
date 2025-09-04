@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { ArrowLeft, Save, AlertCircle } from 'lucide-react'
+import API_URL from '../config/api.js'
 
 export default function QuestionEdit({ user }) {
   const { id } = useParams()
@@ -39,7 +40,7 @@ export default function QuestionEdit({ user }) {
     try {
       setLoading(true)
       const token = localStorage.getItem('token')
-      const response = await fetch(`http://localhost:8000/questions/${id}`, {
+      const response = await fetch(`${API_URL}/questions/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       
@@ -112,7 +113,7 @@ export default function QuestionEdit({ user }) {
       setSaving(true)
       const token = localStorage.getItem('token')
       
-      const response = await fetch(`http://localhost:8000/questions/${id}`, {
+      const response = await fetch(`${API_URL}/questions/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

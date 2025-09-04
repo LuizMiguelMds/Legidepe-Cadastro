@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Search, Eye, Edit, Clock, CheckCircle, XCircle, Plus, Filter } from 'lucide-react'
+import API_URL from '../config/api.js'
 
 export default function QuestionList({ user }) {
   const [questions, setQuestions] = useState([])
@@ -21,7 +22,7 @@ export default function QuestionList({ user }) {
       const params = new URLSearchParams()
       if (statusFilter) params.append('status', statusFilter)
       
-      const response = await fetch(`http://localhost:8000/questions/my?${params}`, {
+      const response = await fetch(`${API_URL}/questions/my?${params}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       
@@ -41,10 +42,10 @@ export default function QuestionList({ user }) {
     try {
       const token = localStorage.getItem('token')
       const [total, pending, approved, rejected] = await Promise.all([
-        fetch('http://localhost:8000/questions/count', { headers: { 'Authorization': `Bearer ${token}` } }),
-        fetch('http://localhost:8000/questions/count?status=pending', { headers: { 'Authorization': `Bearer ${token}` } }),
-        fetch('http://localhost:8000/questions/count?status=approved', { headers: { 'Authorization': `Bearer ${token}` } }),
-        fetch('http://localhost:8000/questions/count?status=rejected', { headers: { 'Authorization': `Bearer ${token}` } })
+        fetch(`${API_URL}/questions/count`, { headers: { 'Authorization': `Bearer ${token}` } }),
+        fetch(`${API_URL}/questions/count?status=pending`, { headers: { 'Authorization': `Bearer ${token}` } }),
+        fetch(`${API_URL}/questions/count?status=approved`, { headers: { 'Authorization': `Bearer ${token}` } }),
+        fetch(`${API_URL}/questions/count?status=rejected`, { headers: { 'Authorization': `Bearer ${token}` } })
       ])
       
       const [totalData, pendingData, approvedData, rejectedData] = await Promise.all([
@@ -232,7 +233,7 @@ export default function QuestionList({ user }) {
                       {question.url_imagem ? (
                         <div className="mb-3">
                           <img
-                            src={`http://localhost:8000${question.url_imagem}`}
+                            src={`${API_URL}${question.url_imagem}`}
                             alt={question.descricao_imagem || 'Imagem da questão'}
                             className="w-32 h-24 object-cover rounded border"
                             onError={(e) => {
